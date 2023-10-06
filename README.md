@@ -16,11 +16,11 @@ Install Nx plugins:
 
 ## Generate apps:
 
-`
-npx nx g @nrwl/express:app server
-npx nx g @nrwl/react:app client
-npx nx g @nrwl/react:app client1 
-`
+```
+    npx nx g @nrwl/express:app server
+    npx nx g @nrwl/react:app client
+    npx nx g @nrwl/react:app client1
+```
 
 ## Multi-Stage Dockerfiles
 
@@ -50,17 +50,17 @@ apps/server/Dockerfile:
 apps/client/Dockerfile:
 
 ```
-FROM node:alpine as build
-WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm install
-COPY . .
-RUN npm run build client
+    FROM node:alpine as build
+    WORKDIR /app
+    COPY package.json package-lock.json ./
+    RUN npm install
+    COPY . .
+    RUN npm run build client
 
-# Production image
+    # Production image
 
-FROM nginx:alpine  
-COPY --from=build /app/dist/apps/client /usr/share/nginx/html
+    FROM nginx:alpine  
+    COPY --from=build /app/dist/apps/client /usr/share/nginx/html
 
 ```
 
@@ -69,41 +69,41 @@ COPY --from=build /app/dist/apps/client /usr/share/nginx/html
 apps/client1/Dockerfile:
 
 ```
-FROM node:alpine as build
-WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm install
-COPY . .
-RUN npm run build client1
+    FROM node:alpine as build
+    WORKDIR /app
+    COPY package.json package-lock.json ./
+    RUN npm install
+    COPY . .
+    RUN npm run build client1
 
-# Production image
+    # Production image
 
-FROM nginx:alpine  
-COPY --from=build /app/dist/apps/client1 /usr/share/nginx/html
+    FROM nginx:alpine  
+    COPY --from=build /app/dist/apps/client1 /usr/share/nginx/html
 ```
 
 ## Build and Run
 ### Build images:
 ```
-docker build -t server -f apps/server/Dockerfile .
-docker build -t client -f apps/client/Dockerfile .
-docker build -t client1 -f apps/client1/Dockerfile .
+    docker build -t server -f apps/server/Dockerfile .
+    docker build -t client -f apps/client/Dockerfile .
+    docker build -t client1 -f apps/client1/Dockerfile .
 
 ```
 
 ### Run images:
 
 ```
-docker run -p 3000:3000 server: 
-docker run -p 4200:80 client
-docker run -p 4201:80 client1
+    docker run -p 3000:3000 server: 
+    docker run -p 4200:80 client
+    docker run -p 4201:80 client1
 
 ```
 
 Then you can access it at http://localhost:2222 for server, http://localhost:4200 and http://localhost:4201 for client on your host machine.
 
 ```
-The End The End The End The End The End The End The End The End The End The End
+    The End The End The End The End The End The End The End The End The End The End
 ```
 
 
